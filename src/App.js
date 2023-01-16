@@ -1,23 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { Container } from '@mui/material';
+import { useState } from 'react';
+import TodoAppBar from './components/TodoAppBar';
+import TodoCreate from './components/TodoCreate';
 function App() {
+  const [todos, setTodos] = useState([]);
+
+  console.log(todos);
+  const todoCreate = (title) => {
+    const updatedTodos = [
+      ...todos,
+      {
+        id: Math.round(Math.random() * 999),
+        title,
+      },
+    ];
+
+    setTodos(updatedTodos);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <TodoAppBar />
+      <Container maxWidth="sm">
+        <TodoCreate onCreate={todoCreate} />
+      </Container>
     </div>
   );
 }
