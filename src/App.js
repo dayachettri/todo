@@ -3,7 +3,9 @@ import TodoCreate from './components/TodoCreate';
 import TodoList from './components/TodoList';
 
 function App() {
-  const [todos, setTodos] = useState([]);
+  const ls = JSON.parse(localStorage.getItem('todos'));
+  const [todos, setTodos] = useState(ls);
+  window.localStorage.setItem('todos', JSON.stringify(todos));
 
   const editTodoById = (id, newTitle) => {
     const updatedTodos = todos.map((todo) => {
