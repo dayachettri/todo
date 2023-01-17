@@ -1,13 +1,7 @@
-import { Button, TextField } from '@mui/material';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useState } from 'react';
 
 function TodoCreate({ onCreate }) {
   const [title, setTitle] = useState('');
-
-  const handleChange = (event) => {
-    setTitle(event.target.value);
-  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -15,21 +9,25 @@ function TodoCreate({ onCreate }) {
     setTitle('');
   };
 
+  const handleChange = (event) => {
+    setTitle(event.target.value);
+  };
+
   return (
-    <form onSubmit={handleSubmit}>
-      <TextField
-        color="secondary"
-        value={title}
-        onChange={handleChange}
-        fullWidth
-        label="Add a Todo"
-        margin="dense"
-        id="fullWidth "
-      />
-      <Button variant="contained" color="primary" endIcon={<AddCircleIcon />}>
-        Add
-      </Button>
-    </form>
+    <div className="create-container">
+      <h1>Todo App</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          value={title}
+          onChange={handleChange}
+          className="create-input"
+          type="text"
+          placeholder="Add a Todo"
+        />
+        <button className="create-btn">Create</button>
+      </form>
+    </div>
   );
 }
+
 export default TodoCreate;

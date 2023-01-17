@@ -1,29 +1,43 @@
-import { Container } from '@mui/material';
 import { useState } from 'react';
-import TodoAppBar from './components/TodoAppBar';
 import TodoCreate from './components/TodoCreate';
+import TodoList from './components/TodoList';
+
 function App() {
   const [todos, setTodos] = useState([]);
 
-  console.log(todos);
-  const todoCreate = (title) => {
-    const updatedTodos = [
-      ...todos,
-      {
-        id: Math.round(Math.random() * 999),
-        title,
-      },
-    ];
+  const editTodoById = (id, newTitle) => {
+    const updatedTodos = todos.map((todo) => {
+      if (todo.id === id) {
+        return { ...todo, title: newTitle };
+      }
 
+      return todo;
+    });
+
+    setTodos(updatedTodos);
+  };
+
+  const deleteTodoById = (id) => {
+    const updatedTodos = todos.filter((todo) => {
+      // FKT
+      return todo.id !== id;
+    });
+
+    setTodos(updatedTodos);
+  };
+
+  const createTodo = (title) => {
+    const id = Math.round(Math.random() * 999);
+
+    const updatedTodos = [...todos, { id, title }];
     setTodos(updatedTodos);
   };
 
   return (
     <div>
-      <TodoAppBar />
-      <Container maxWidth="sm">
-        <TodoCreate onCreate={todoCreate} />
-      </Container>
+      <TodoCreate onCreate={createTodo} />
+      <h2 className="h-todo">To-do's</h2>
+      <TodoList todos={todos} onDelete={deleteTodoById} onEdit={editTodoById} />
     </div>
   );
 }
